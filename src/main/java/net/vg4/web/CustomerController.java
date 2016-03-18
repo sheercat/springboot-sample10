@@ -14,14 +14,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import lombok.extern.slf4j.Slf4j;
 import net.vg4.domain.Customer;
 import net.vg4.service.CustomerService;
 import net.vg4.service.LoginUserDetails;
 
 @Controller
 @RequestMapping("customers")
-@Slf4j
 public class CustomerController {
 	@Autowired
 	CustomerService customerService;

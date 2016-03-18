@@ -1,0 +1,41 @@
+spring:
+  profiles:
+    active: dev
+
+logging:
+  level:
+    org:
+      springframework:
+        web: INFO
+
+security:
+  basic:
+    enabled: false
+
+---
+spring:
+  profiles: dev
+  thymeleaf:
+    cache: false
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:file:/tmp/customers;MODE=PostgreSQL
+    username: sa
+    password:
+  jpa:
+    database: H2
+# create-drop つかうと、hibanate が hdm2ddl で勝手にテーブル洗替するので、migration が全く意味なくなる
+#    hibernate:
+#     ddl-auto: create-drop
+
+---
+spring:
+  thymeleaf:
+    cache: false
+  profiles: heroku
+  datasource:
+    driver-class-name: org.postgressql.Driver
+  jpa:
+    database: POSTGRESQL
+#    hibernate:
+#      ddl-auto: create-drop

@@ -15,7 +15,6 @@ import net.vg4.domain.User;
 import net.vg4.repository.CustomerRepository;
 
 @Service
-@Transactional
 @Slf4j
 public class CustomerService {
 	@Autowired
@@ -33,16 +32,19 @@ public class CustomerService {
 		return customerRepository.findOne(id);
 	}
 
+	@Transactional(readOnly = false)
 	public Customer create(Customer customer, User user) {
 		customer.setUser(user);
 		return customerRepository.save(customer);
 	}
 
+	@Transactional(readOnly = false)
 	public Customer update(Customer customer, User user) {
 		customer.setUser(user);
 		return customerRepository.save(customer);
 	}
 
+	@Transactional(readOnly = false)
 	public void delete(Integer id) {
 		try {
 			if (customerRepository.exists(id)) {
