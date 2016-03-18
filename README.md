@@ -9,7 +9,9 @@
 
 を実行
 
-#
+# heroku
+- https://fast-sierra-35120.herokuapp.com/customers
+
 
 
 
