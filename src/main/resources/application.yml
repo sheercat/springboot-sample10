@@ -34,7 +34,7 @@ spring:
     cache: false
   profiles: heroku
   datasource:
-    driver-class-name: org.postgressql.Driver
+    driver-class-name: org.postgresql.Driver
   jpa:
     database: POSTGRESQL
 #    hibernate:
