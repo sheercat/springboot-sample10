@@ -24,7 +24,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().antMatchers("/loginForm", "/metrics/**", "/info", "/health", "/env/**", "/mappings", "/beans", "/configprops", "/trace", "/flyway", "/dump", "/autoconfig").permitAll().anyRequest().authenticated();
+		http.authorizeRequests().antMatchers("/loginForm", "/api/**", "/hello", "/metrics/**", "/info", "/health", "/env/**", "/mappings", "/beans", "/configprops", "/trace", "/flyway", "/dump", "/autoconfig").permitAll().anyRequest().authenticated();
+		http.antMatcher("/api/**").csrf().disable();
 		http.formLogin().loginProcessingUrl("/login").loginPage("/loginForm").failureUrl("/loginForm?error")
 				.defaultSuccessUrl("/customers", true).usernameParameter("username").passwordParameter("password");
 		http.logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/loginForm");

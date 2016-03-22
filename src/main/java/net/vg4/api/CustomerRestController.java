@@ -48,8 +48,8 @@ public class CustomerRestController {
 //	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	ResponseEntity<Customer> postCustomers(@Validated @RequestBody Customer customer, UriComponentsBuilder uriBuilder, @AuthenticationPrincipal LoginUserDetails userDetails) {
-		Customer created = customerService.create(customer, userDetails.getUser());
+	ResponseEntity<Customer> postCustomers(@Validated @RequestBody Customer customer, UriComponentsBuilder uriBuilder) {
+		Customer created = customerService.create(customer, customer.getUser());
 		URI loc = uriBuilder.path("api/customers/{id}").buildAndExpand(created.getId()).toUri();
 		HttpHeaders headers = new HttpHeaders();
 		headers.setLocation(loc);
@@ -58,14 +58,14 @@ public class CustomerRestController {
 			
 
 	@RequestMapping(value = "{id}", method = RequestMethod.PUT)
-	Customer postCustomer(@PathVariable Integer id, @Validated @RequestBody Customer customer, @AuthenticationPrincipal LoginUserDetails userDetails) {
+	Customer postCustomer(@PathVariable Integer id, @Validated @RequestBody Customer customer) {
 		customer.setId(id);
-		return customerService.update(customer, userDetails.getUser());
+		return customerService.update(customer, customer.getUser());
 	}
 
 	@RequestMapping(value = "{id}", method = RequestMethod.DELETE)
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	void putCustomers(@Validated @PathVariable Integer id) {
+	void deleteCustomers(@Validated @PathVariable Integer id) {
 		customerService.delete(id);
 	}
 
