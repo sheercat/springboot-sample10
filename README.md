@@ -9,9 +9,9 @@
 1. https://projectlombok.org へいって lombok.jar を DL して、実行すると、STS を見つけてくれるので install
 1. java 8 を DL してインストール(もしくは一番最初にこれをやると、次の手順いらない)
 1. http://qiita.com/ukiuni@github/items/0b2555c7849d2a2647b5 どおりに jre 追加して、1.8 デフォに
-1. gradle install
-1. gradle wrap
+1. ひつようなら gradle install
 1. ./gradlew bootRun or ./gradlew bootRepackage
+1. STS で見るときは import で、Gradle (STS) Project
 
 # Data::Dumper は
 
