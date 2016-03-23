@@ -37,7 +37,8 @@ dependencies {
 	compile('org.webjars:bootstrap:3.2.0')
 	compile('org.flywaydb:flyway-core')
 	compile('org.projectlombok:lombok:1.16.6')
-	runtime('com.h2database:h2')
+	compile('org.apache.commons:commons-lang3:3.4')
+  	runtime('com.h2database:h2')
 	testCompile('com.jayway.restassured:rest-assured:2.9.0')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 	// testCompile group: 'junit', name: 'junit', version: '4.11'

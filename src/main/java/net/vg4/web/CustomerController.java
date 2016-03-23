@@ -1,7 +1,5 @@
 package net.vg4.web;
 
-import java.util.List;
-
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -14,12 +12,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import lombok.val;
 import net.vg4.domain.Customer;
 import net.vg4.service.CustomerService;
 import net.vg4.service.LoginUserDetails;
 
 @Controller
 @RequestMapping("customers")
+@val
 public class CustomerController {
 	@Autowired
 	CustomerService customerService;
@@ -31,7 +31,7 @@ public class CustomerController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	String list(Model model) {
-		List<Customer> customers = customerService.findAll();
+		val customers = customerService.findAll();
 		model.addAttribute("customers", customers);
 		return "customers/list";
 	}
@@ -42,7 +42,7 @@ public class CustomerController {
 		if (result.hasErrors()) {
 			return this.list(model);
 		}
-		Customer customer = new Customer();
+		val customer = new Customer();
 		BeanUtils.copyProperties(form, customer);
 		customerService.create(customer, userDetails.getUser());
 		return "redirect:/customers";
@@ -50,7 +50,7 @@ public class CustomerController {
 
 	@RequestMapping(value = "edit", params = "form", method = RequestMethod.GET)
 	String editForm(@RequestParam Integer id, CustomerForm form) {
-		Customer customer = customerService.findOne(id);
+		val customer = customerService.findOne(id);
 		BeanUtils.copyProperties(customer, form);
 		return "customers/edit";
 	}
@@ -61,7 +61,7 @@ public class CustomerController {
 		if (result.hasErrors()) {
 			return editForm(id, form);
 		}
-		Customer customer = new Customer();
+		val customer = new Customer();
 		BeanUtils.copyProperties(form, customer);
 		customer.setId(id);
 		customerService.update(customer, userDetails.getUser());
@@ -78,5 +78,4 @@ public class CustomerController {
 		customerService.delete(id);
 		return "redirect:/customers";
 	}
-
 }
