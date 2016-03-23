@@ -28,6 +28,7 @@ import org.springframework.web.client.RestTemplate;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.Data;
+import lombok.val;
 import net.vg4.domain.Customer;
 import net.vg4.repository.CustomerRepository;
 
@@ -35,6 +36,7 @@ import net.vg4.repository.CustomerRepository;
 @SpringApplicationConfiguration(classes = App.class)
 @WebAppConfiguration
 @IntegrationTest({ "server.port:0", "spring.datasource.url:jdbc:h2:mem:bookmark;DB_CLOSE_ON_EXIT=FALSE" }) // (1)
+@val
 public class AppTests {
 	@Autowired
 	CustomerRepository customerRepository; // (2)
@@ -71,18 +73,18 @@ public class AppTests {
 	// (5)
 	@Test
 	public void testGetCustomers() throws Exception {
-		ResponseEntity<Page<Customer>> response = restTemplate.exchange(apiEndpoint, HttpMethod.GET,
+		val response = restTemplate.exchange(apiEndpoint, HttpMethod.GET,
 				null /* body,header */, new ParameterizedTypeReference<Page<Customer>>() {
 				}); // (6)
 		assertThat(response.getStatusCode(), is(HttpStatus.OK));
 		assertThat(response.getBody().getNumberOfElements(), is(2));
 
-		Customer c1 = response.getBody().getContent().get(0);
+		val c1 = response.getBody().getContent().get(0);
 		assertThat(c1.getId(), is(customer2.getId()));
 		assertThat(c1.getFirstName(), is(customer2.getFirstName()));
 		assertThat(c1.getLastName(), is(customer2.getLastName()));
 
-		Customer c2 = response.getBody().getContent().get(1);
+		val c2 = response.getBody().getContent().get(1);
 		assertThat(c2.getId(), is(customer1.getId()));
 		assertThat(c2.getFirstName(), is(customer1.getFirstName()));
 		assertThat(c2.getLastName(), is(customer1.getLastName()));
@@ -91,14 +93,14 @@ public class AppTests {
 	// (7)
 	@Test
 	public void testPostCustomers() throws Exception {
-		Customer customer3 = new Customer();
+		val customer3 = new Customer();
 		customer3.setFirstName("Nobita");
 		customer3.setLastName("Nobi");
 
-		ResponseEntity<Customer> response = restTemplate.exchange(apiEndpoint, HttpMethod.POST,
-				new HttpEntity<>(customer3) /* (8) */, Customer.class);
+		val response = restTemplate.exchange(apiEndpoint, HttpMethod.POST, new HttpEntity<>(customer3) /* (8) */,
+				Customer.class);
 		assertThat(response.getStatusCode(), is(HttpStatus.CREATED));
-		Customer customer = response.getBody();
+		val customer = response.getBody();
 		assertThat(customer.getId(), is(notNullValue()));
 		assertThat(customer.getFirstName(), is(customer3.getFirstName()));
 		assertThat(customer.getLastName(), is(customer3.getLastName()));
@@ -111,7 +113,7 @@ public class AppTests {
 	// (9)
 	@Test
 	public void testDeleteCustomers() throws Exception {
-		ResponseEntity<Void> response = restTemplate.exchange(apiEndpoint + "/{id}" /* (9) */, HttpMethod.DELETE,
+		val response = restTemplate.exchange(apiEndpoint + "/{id}" /* (9) */, HttpMethod.DELETE,
 				null /* body,header */, Void.class, Collections.singletonMap("id", customer1.getId()));
 
 		assertThat(response.getStatusCode(), is(HttpStatus.NO_CONTENT));

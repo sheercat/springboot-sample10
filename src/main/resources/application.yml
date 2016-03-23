@@ -8,6 +8,7 @@ logging:
       springframework:
         web: INFO
 
+# basic 認証
 security:
   basic:
     enabled: false
@@ -30,9 +31,9 @@ spring:
 
 ---
 spring:
+  profiles: heroku
   thymeleaf:
     cache: false
-  profiles: heroku
   datasource:
     driver-class-name: org.postgresql.Driver
   jpa:

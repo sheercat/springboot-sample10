@@ -21,6 +21,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.http.ContentType;
 
+import lombok.val;
 import net.vg4.App;
 import net.vg4.domain.Customer;
 import net.vg4.repository.CustomerRepository;
@@ -29,6 +30,7 @@ import net.vg4.repository.CustomerRepository;
 @SpringApplicationConfiguration(classes = App.class)
 @WebAppConfiguration
 @IntegrationTest({ "server.port:0", "spring.datasource.url:jdbc:h2:mem:bookmark;DB_CLOSE_ON_EXIT=FALSE" })
+@val
 public class CustomerRestControllerIntegrationTest {
 	@Autowired
 	CustomerRepository customerRepository;
@@ -63,7 +65,7 @@ public class CustomerRestControllerIntegrationTest {
 
 	@Test
 	public void testPostCustomers() throws Exception {
-		Customer customer3 = new Customer();
+		val customer3 = new Customer();
 		customer3.setFirstName("Nobita");
 		customer3.setLastName("Nobi");
 

@@ -39,7 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		// http.antMatcher("/api/**").csrf().disable();
 
 		// 正解
-		// val mcr2 = http.csrf().ignoringAntMatchers("/api/**");
+		http.csrf().ignoringAntMatchers("/api/**");
 		// System.out.println("!!!" + ToStringBuilder.reflectionToString(mcr2));
 		
 		http.formLogin().loginProcessingUrl("/login").loginPage("/loginForm").failureUrl("/loginForm?error")
