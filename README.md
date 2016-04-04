@@ -1,6 +1,6 @@
 # springboot-sample10
 
-- はじめての spring boot サンプルの gradle 版
+- はじめての spring boot サンプルの gradle2.12 版
 
 # how to start
 
@@ -14,6 +14,8 @@
     1. Could not find tools.jar → yum で `yum install java-1.8.0-openjdk-devel.x86_64` などする
     1. それ以外　→　(´・ω・`)
 1. STS で見るときは import で、Gradle (STS) Project 指定する
+
+# ログインユーザーは user1 / demo or user2 / demo
 
 # Data::Dumper は
 
