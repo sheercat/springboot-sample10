@@ -21,47 +21,47 @@ import lombok.val;
 @EnableWebSecurity
 @val
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-	@Override
-	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers("/webjars/**", "/css/**");
-	}
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers("/webjars/**", "/css/**");
+    }
 
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests()
-				.antMatchers("/loginForm", "/api/**", "/hello", "/metrics/**", "/info", "/health", "/env/**",
-						"/mappings", "/beans", "/configprops", "/trace", "/flyway", "/dump", "/autoconfig")
-				.permitAll().anyRequest().authenticated();
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.authorizeRequests()
+            .antMatchers("/loginForm", "/api/**", "/hello", "/metrics/**", "/info", "/health", "/env/**",
+                         "/mappings", "/beans", "/configprops", "/trace", "/flyway", "/dump", "/autoconfig")
+            .permitAll().anyRequest().authenticated();
 
-		// まちがい
-		// val mcr = http.antMatcher("/api/**").csrf();
-		// System.out.println("!!!" + ToStringBuilder.reflectionToString(mcr));
-		// http.antMatcher("/api/**").csrf().disable();
+        // まちがい
+        // val mcr = http.antMatcher("/api/**").csrf();
+        // System.out.println("!!!" + ToStringBuilder.reflectionToString(mcr));
+        // http.antMatcher("/api/**").csrf().disable();
 
-		// 正解
-		http.csrf().ignoringAntMatchers("/api/**");
-		// System.out.println("!!!" + ToStringBuilder.reflectionToString(mcr2));
-		
-		http.formLogin().loginProcessingUrl("/login").loginPage("/loginForm").failureUrl("/loginForm?error")
-				.defaultSuccessUrl("/customers", true).usernameParameter("username").passwordParameter("password");
-		http.logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/loginForm");
-	}
+        // 正解
+        http.csrf().ignoringAntMatchers("/api/**");
+        // System.out.println("!!!" + ToStringBuilder.reflectionToString(mcr2));
 
-	@Configuration
-	static class AuthenticationConfiguration extends GlobalAuthenticationConfigurerAdapter {
-		@Autowired
-		UserDetailsService userDetailsService;
+        http.formLogin().loginProcessingUrl("/login").loginPage("/loginForm").failureUrl("/loginForm?error")
+            .defaultSuccessUrl("/customers", true).usernameParameter("username").passwordParameter("password");
+        http.logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/loginForm");
+    }
 
-		@Bean
-		PasswordEncoder passwordEncoder() {
-			return new BCryptPasswordEncoder();
-		}
+    @Configuration
+    static class AuthenticationConfiguration extends GlobalAuthenticationConfigurerAdapter {
+        @Autowired
+        UserDetailsService userDetailsService;
 
-		@Override
-		public void init(AuthenticationManagerBuilder auth) throws Exception {
-			auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
-		}
+        @Bean
+        PasswordEncoder passwordEncoder() {
+            return new BCryptPasswordEncoder();
+        }
 
-	}
+        @Override
+        public void init(AuthenticationManagerBuilder auth) throws Exception {
+            auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+        }
+
+    }
 
 }

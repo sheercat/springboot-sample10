@@ -13,16 +13,18 @@ import net.vg4.repository.UserRepository;
 @Service
 @val
 public class LoginUserDetailsService implements UserDetailsService {
-	@Autowired
-	UserRepository userRepository;
-	
-	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		val user = userRepository.findOne(username);
-		if (user == null) {
-			throw new UsernameNotFoundException("not found");
-		}
-		return new LoginUserDetails(user);
-	}
+    final UserRepository userRepository;
+
+    @Autowired
+    public LoginUserDetailsService(UserRepository userRepository) {this.userRepository = userRepository;}
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        val user = userRepository.findOne(username);
+        if (user == null) {
+            throw new UsernameNotFoundException("not found");
+        }
+        return new LoginUserDetails(user);
+    }
 
 }

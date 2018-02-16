@@ -8,10 +8,10 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @Slf4j
 public class LoginController {
-	@RequestMapping("loginForm")
-	String loginForm() {
-		log.info("dispatch loginForm");
-		return "loginForm";
-	}
+    @RequestMapping("loginForm")
+    String loginForm() {
+        log.info("dispatch loginForm");
+        return "loginForm";
+    }
 
 }

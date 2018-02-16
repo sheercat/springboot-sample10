@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.extern.slf4j.Slf4j;
+
 import net.vg4.domain.Customer;
 import net.vg4.domain.User;
 import net.vg4.repository.CustomerRepository;
@@ -17,48 +18,52 @@ import net.vg4.repository.CustomerRepository;
 @Service
 @Slf4j
 public class CustomerService {
-	@Autowired
-	CustomerRepository customerRepository;
+    final CustomerRepository customerRepository;
 
-	// public List<Customer> findAll() {
-	// return customerRepository.findAllOrderByName();
-	// }
+    @Autowired
+    public CustomerService(CustomerRepository customerRepository) {
+        this.customerRepository = customerRepository;
+    }
 
-	public List<Customer> findAll() {
-		return customerRepository.findAllWithUserOrderByName();
-	}
+    // public List<Customer> findAll() {
+    // return customerRepository.findAllOrderByName();
+    // }
 
-	public Customer findOne(Integer id) {
-		return customerRepository.findOne(id);
-	}
+    public List<Customer> findAll() {
+        return customerRepository.findAllWithUserOrderByName();
+    }
 
-	@Transactional(readOnly = false)
-	public Customer create(Customer customer, User user) {
-		customer.setUser(user);
-		return customerRepository.save(customer);
-	}
+    public Customer findOne(Integer id) {
+        return customerRepository.findOne(id);
+    }
 
-	@Transactional(readOnly = false)
-	public Customer update(Customer customer, User user) {
-		customer.setUser(user);
-		return customerRepository.save(customer);
-	}
+    @Transactional(readOnly = false)
+    public Customer create(Customer customer, User user) {
+        customer.setUser(user);
+        return customerRepository.save(customer);
+    }
 
-	@Transactional(readOnly = false)
-	public void delete(Integer id) {
-		try {
-			if (customerRepository.exists(id)) {
-				customerRepository.delete(id);
-			} else {
-				log.warn("not exists id", id);
-			}
-		} catch (EmptyResultDataAccessException e) {
-			log.error("Error in delete:");
-		}
-	}
+    @Transactional(readOnly = false)
+    public Customer update(Customer customer, User user) {
+        customer.setUser(user);
+        return customerRepository.save(customer);
+    }
 
-	public Page<Customer> findAll(Pageable pageable) {
-		return customerRepository.findAllOrderByName(pageable);
-	}
+    @Transactional(readOnly = false)
+    public void delete(Integer id) {
+        try {
+            if (customerRepository.exists(id)) {
+                customerRepository.delete(id);
+            } else {
+                log.warn("not exists id", id);
+            }
+        } catch (EmptyResultDataAccessException e) {
+            log.error("Error in delete:");
+        }
+    }
+
+    public Page<Customer> findAll(Pageable pageable) {
+        return customerRepository.findAllOrderByName(pageable);
+    }
 
 }

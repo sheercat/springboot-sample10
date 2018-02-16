@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import lombok.val;
+
 import net.vg4.domain.Customer;
 import net.vg4.service.CustomerService;
 
@@ -24,20 +25,22 @@ import net.vg4.service.CustomerService;
 @RequestMapping("api/customers")
 @val
 public class CustomerRestController {
-	@Autowired
-	CustomerService customerService;
+    final CustomerService customerService;
 
-	@RequestMapping(method = RequestMethod.GET)
-	Page<Customer> getCustomer(@PageableDefault Pageable pageable) {
-		val customers = customerService.findAll(pageable);
-		return customers;
-	}
+    @Autowired
+    public CustomerRestController(CustomerService customerService) {this.customerService = customerService;}
 
-	@RequestMapping(value = "{id}", method = RequestMethod.GET)
-	Customer getCustomer(@PathVariable Integer id) {
-		val customer = customerService.findOne(id);
-		return customer;
-	}
+    @RequestMapping(method = RequestMethod.GET)
+    Page<Customer> getCustomer(@PageableDefault Pageable pageable) {
+        val customers = customerService.findAll(pageable);
+        return customers;
+    }
+
+    @RequestMapping(value = "{id}", method = RequestMethod.GET)
+    Customer getCustomer(@PathVariable Integer id) {
+        val customer = customerService.findOne(id);
+        return customer;
+    }
 
 //	@RequestMapping(method = RequestMethod.POST)
 //	@ResponseStatus(HttpStatus.CREATED)
@@ -45,26 +48,26 @@ public class CustomerRestController {
 //		return customerService.create(customer);
 //	}
 
-	@RequestMapping(method = RequestMethod.POST)
-	ResponseEntity<Customer> postCustomers(@Validated @RequestBody Customer customer, UriComponentsBuilder uriBuilder) {
-		val created = customerService.create(customer, customer.getUser());
-		val loc = uriBuilder.path("api/customers/{id}").buildAndExpand(created.getId()).toUri();
-		val headers = new HttpHeaders();
-		headers.setLocation(loc);
-		return new ResponseEntity<>(created, headers, HttpStatus.CREATED);
-	}
-			
+    @RequestMapping(method = RequestMethod.POST)
+    ResponseEntity<Customer> postCustomers(@Validated @RequestBody Customer customer,
+                                           UriComponentsBuilder uriBuilder) {
+        val created = customerService.create(customer, customer.getUser());
+        val loc = uriBuilder.path("api/customers/{id}").buildAndExpand(created.getId()).toUri();
+        val headers = new HttpHeaders();
+        headers.setLocation(loc);
+        return new ResponseEntity<>(created, headers, HttpStatus.CREATED);
+    }
 
-	@RequestMapping(value = "{id}", method = RequestMethod.PUT)
-	Customer postCustomer(@PathVariable Integer id, @Validated @RequestBody Customer customer) {
-		customer.setId(id);
-		return customerService.update(customer, customer.getUser());
-	}
+    @RequestMapping(value = "{id}", method = RequestMethod.PUT)
+    Customer postCustomer(@PathVariable Integer id, @Validated @RequestBody Customer customer) {
+        customer.setId(id);
+        return customerService.update(customer, customer.getUser());
+    }
 
-	@RequestMapping(value = "{id}", method = RequestMethod.DELETE)
-	@ResponseStatus(HttpStatus.NO_CONTENT)
-	void deleteCustomers(@Validated @PathVariable Integer id) {
-		customerService.delete(id);
-	}
+    @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    void deleteCustomers(@Validated @PathVariable Integer id) {
+        customerService.delete(id);
+    }
 
 }

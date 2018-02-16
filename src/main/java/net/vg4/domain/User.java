@@ -23,13 +23,13 @@ import lombok.NoArgsConstructor;
 @Table(name = "users")
 @ToString(excludes = "customers")
 public class User {
-	@Id
-	private String username;
+    @Id
+    private String username;
 
-	@JsonIgnore
-	private String encodedPassword;
+    @JsonIgnore
+    private String encodedPassword;
 
-	@JsonIgnore
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
-	private List<Customer> customers;
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
+    private List<Customer> customers;
 }

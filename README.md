@@ -1,9 +1,16 @@
 # springboot-sample10
 
-- はじめての spring boot サンプルの gradle2.12 版
+- はじめての spring boot サンプルの springboot 1.5.x + gradle 版
 
 # how to start
+## intellij
+1. java 8 用意
+1. intellij を DL
+1. gradle plugins, lombok plugins など install
+1. git clone url を指定してプロジェクト import
+1. 右のタブから gradle 選んで tasks > application > bootRun
 
+## STS (eclipse)
 1. https://spring.io/tools/sts へいって STS (spring boot plugin いりの eclipse ) を DL します
 1. 起動して、help > eclipse marketplace から gradle integration for eclipse を 追加
 1. https://projectlombok.org へいって lombok.jar を DL して、実行すると、STS を見つけてくれるので install
@@ -14,8 +21,6 @@
     1. Could not find tools.jar → yum で `yum install java-1.8.0-openjdk-devel.x86_64` などする
     1. それ以外　→　(´・ω・`)
 1. STS で見るときは import で、Gradle (STS) Project 指定する
-
-# ログインユーザーは user1 / demo or user2 / demo
 
 # Data::Dumper は
 
@@ -31,4 +36,8 @@
 
 # heroku
 - https://fast-sierra-35120.herokuapp.com/customers
+
+# memo
+
+- ログインユーザーは user1 / demo or user2 / demo
 

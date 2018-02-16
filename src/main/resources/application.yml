@@ -19,8 +19,10 @@ spring:
   thymeleaf:
     cache: false
   datasource:
-    driver-class-name: org.h2.Driver
-    url: jdbc:h2:file:/tmp/customers;MODE=PostgreSQL
+#    driver-class-name: org.h2.Driver
+#    url: jdbc:h2:file:/tmp/customers;MODE=PostgreSQL
+    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+    url: jdbc:log4jdbc:h2:file:/tmp/customers;MODE=PostgreSQL
     username: sa
     password:
   jpa:

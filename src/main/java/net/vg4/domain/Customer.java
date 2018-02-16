@@ -21,19 +21,19 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Customer {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
-	@NotNull
-	@Column(nullable = false)
-	private String firstName;
+    @NotNull
+    @Column(nullable = false)
+    private String firstName;
 
-	@NotNull
-	@Column(nullable = false)
-	private String lastName;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(nullable = true, name = "username")
-	private User user;
+    @NotNull
+    @Column(nullable = false)
+    private String lastName;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(nullable = true, name = "username")
+    private User user;
 }
