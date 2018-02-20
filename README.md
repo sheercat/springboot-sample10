@@ -4,7 +4,6 @@
 
 # how to start
 ## intellij
-1. java 8 用意
 1. intellij を DL
 1. gradle plugins, lombok plugins など install
 1. git clone url を指定してプロジェクト import
@@ -19,7 +18,6 @@
 1. ./gradlew bootRun or ./gradlew bootRepackage (ひつようなら gradle install)
 1. エラーになる場合
     1. Could not find tools.jar → yum で `yum install java-1.8.0-openjdk-devel.x86_64` などする
-    1. それ以外　→　(´・ω・`)
 1. STS で見るときは import で、Gradle (STS) Project 指定する
 
 # Data::Dumper は
@@ -38,6 +36,6 @@
 - https://fast-sierra-35120.herokuapp.com/customers
 
 # memo
-
+- see: https://github.com/making/hajiboot-samples
 - ログインユーザーは user1 / demo or user2 / demo
 

@@ -8,7 +8,11 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -30,13 +34,13 @@ public class CustomerRestController {
     @Autowired
     public CustomerRestController(CustomerService customerService) {this.customerService = customerService;}
 
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     Page<Customer> getCustomer(@PageableDefault Pageable pageable) {
         val customers = customerService.findAll(pageable);
         return customers;
     }
 
-    @RequestMapping(value = "{id}", method = RequestMethod.GET)
+    @GetMapping("{id}")
     Customer getCustomer(@PathVariable Integer id) {
         val customer = customerService.findOne(id);
         return customer;
@@ -48,7 +52,7 @@ public class CustomerRestController {
 //		return customerService.create(customer);
 //	}
 
-    @RequestMapping(method = RequestMethod.POST)
+    @PostMapping
     ResponseEntity<Customer> postCustomers(@Validated @RequestBody Customer customer,
                                            UriComponentsBuilder uriBuilder) {
         val created = customerService.create(customer, customer.getUser());
@@ -58,13 +62,13 @@ public class CustomerRestController {
         return new ResponseEntity<>(created, headers, HttpStatus.CREATED);
     }
 
-    @RequestMapping(value = "{id}", method = RequestMethod.PUT)
+    @PutMapping("{id}")
     Customer postCustomer(@PathVariable Integer id, @Validated @RequestBody Customer customer) {
         customer.setId(id);
         return customerService.update(customer, customer.getUser());
     }
 
-    @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
+    @DeleteMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     void deleteCustomers(@Validated @PathVariable Integer id) {
         customerService.delete(id);

@@ -7,7 +7,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,14 +34,14 @@ public class CustomerController {
         return new CustomerForm();
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     String list(Model model) {
         val customers = customerService.findAll();
         model.addAttribute("customers", customers);
         return "customers/list";
     }
 
-    @RequestMapping(value = "create", method = RequestMethod.POST)
+    @PostMapping("create")
     String create(@Validated CustomerForm form, BindingResult result, Model model,
                   @AuthenticationPrincipal LoginUserDetails userDetails) {
         if (result.hasErrors()) {
@@ -51,14 +53,14 @@ public class CustomerController {
         return "redirect:/customers";
     }
 
-    @RequestMapping(value = "edit", params = "form", method = RequestMethod.GET)
+    @GetMapping(value = "edit", params = "form")
     String editForm(@RequestParam Integer id, CustomerForm form) {
         val customer = customerService.findOne(id);
         BeanUtils.copyProperties(customer, form);
         return "customers/edit";
     }
 
-    @RequestMapping(value = "edit", method = RequestMethod.POST)
+    @PostMapping("edit")
     String edit(@RequestParam Integer id, @Validated CustomerForm form, BindingResult result,
                 @AuthenticationPrincipal LoginUserDetails userDetails) {
         if (result.hasErrors()) {
@@ -71,12 +73,12 @@ public class CustomerController {
         return "redirect:/customers";
     }
 
-    @RequestMapping(value = "edit", params = "goToTop")
+    @PostMapping(value = "edit", params = "goToTop")
     String goToTop() {
         return "redirect:/customers";
     }
 
-    @RequestMapping(value = "delete", method = RequestMethod.POST)
+    @PostMapping(value = "delete")
     String delete(@RequestParam Integer id) {
         customerService.delete(id);
         return "redirect:/customers";
