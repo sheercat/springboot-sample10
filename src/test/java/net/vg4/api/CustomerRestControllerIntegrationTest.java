@@ -22,13 +22,12 @@ import net.vg4.repository.CustomerRepository;
 
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
-import lombok.val;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
         properties = { "spring.datasource.url:jdbc:log4jdbc:h2:mem:customers;DB_CLOSE_ON_EXIT=FALSE" })
-@val
+
 public class CustomerRestControllerIntegrationTest {
     @Autowired
     CustomerRepository customerRepository;
@@ -65,7 +64,7 @@ public class CustomerRestControllerIntegrationTest {
 
     @Test
     public void testPostCustomers() throws Exception {
-        val customer3 = new Customer();
+        Customer customer3 = new Customer();
         customer3.setFirstName("Nobita");
         customer3.setLastName("Nobi");
 
